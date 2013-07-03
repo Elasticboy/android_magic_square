@@ -20,6 +20,6 @@ local.properties
 .project
 
 # Android Studio project files
-.iml
-.gradle
+*.iml
 .idea
+build
