@@ -62,13 +62,17 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 
     private void fillMagicSquare() {
 
+
     }
 
     private int getSquareSize() {
         return mSeekBar.getProgress() + 3;
     }
 
-    //private TextView getCell(int id, int width) {
-        //if ()
-    //}
+    private TextView getCell(int id, int width) {
+        if (id > width * width) {
+            throw new IllegalArgumentException("id out of bound.");
+        }
+        return (TextView) mGridView.getChildAt(id);
+    }
 }
