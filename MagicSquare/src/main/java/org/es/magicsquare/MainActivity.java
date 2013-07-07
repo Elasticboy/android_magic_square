@@ -15,10 +15,6 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 
     private SeekBar mSeekBar;
     private GridView mGridView;
-    private TextView[] mCells;
-    private int mCurrentX;
-    private int mCurrentY;
-    private int mCurrentValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +27,6 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
         mGridView = (GridView) findViewById(R.id.gridView);
         mGridView.setCacheColorHint(R.color.grid_color);
         mGridView.setBackgroundColor(getResources().getColor(R.color.grid_color));
-
-        mCurrentX = 0;
-        mCurrentY = 0;
-        mCurrentValue = 1;
     }
 
     @Override
@@ -52,7 +44,7 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
             return;
         }
 
-        mGridView.removeAllViews();
+        mGridView.removeAllViewsInLayout();
         drawMagicSquare(size);
     }
 
