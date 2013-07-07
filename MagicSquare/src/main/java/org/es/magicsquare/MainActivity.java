@@ -1,5 +1,6 @@
 package org.es.magicsquare;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -8,11 +9,16 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class MainActivity extends Activity implements OnSeekBarChangeListener {
 
     private SeekBar mSeekBar;
     private GridView mGridView;
-    private TextView[][] mCells;
+    private TextView[] mCells;
+    private int mCurrentX;
+    private int mCurrentY;
+    private int mCurrentValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,10 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
         mGridView = (GridView) findViewById(R.id.gridView);
         mGridView.setCacheColorHint(R.color.grid_color);
         mGridView.setBackgroundColor(getResources().getColor(R.color.grid_color));
+
+        mCurrentX = 0;
+        mCurrentY = 0;
+        mCurrentValue = 1;
     }
 
     @Override
@@ -36,43 +46,39 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-        drawMagicSquare(getSquareSize());
+        final int size = getSquareSize();
+        // Magic Square works only with odd sizes
+        if (size % 2 == 0) {
+            return;
+        }
+
+        mGridView.removeAllViews();
+        drawMagicSquare(size);
     }
 
     @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
+    public void onStartTrackingTouch(SeekBar seekBar) { }
 
     @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
-    }
+    public void onStopTrackingTouch(SeekBar seekBar) { }
 
     private void drawMagicSquare(int size) {
-        mCells = new TextView[size][size];
-        mGridView.setNumColumns(size);
 
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size; x++) {
-                mGridView.addView(mCells[x][y]);
-            }
+        Random rand = new Random();
+        Point startPosition = new Point(rand.nextInt(size), rand.nextInt(size));
+        MagicSquare magicSquare = new MagicSquare(size, startPosition);
+
+        int[] values = magicSquare.build();
+
+        TextView textView = null;
+        for (int value : values) {
+            textView = new TextView(getApplicationContext());
+            textView.setText(value);
+            mGridView.addView(textView);
         }
-    }
-
-    private void fillMagicSquare() {
-
-
     }
 
     private int getSquareSize() {
         return mSeekBar.getProgress() + 3;
-    }
-
-    private TextView getCell(int id, int width) {
-        if (id > width * width) {
-            throw new IllegalArgumentException("id out of bound.");
-        }
-        return (TextView) mGridView.getChildAt(id);
     }
 }
