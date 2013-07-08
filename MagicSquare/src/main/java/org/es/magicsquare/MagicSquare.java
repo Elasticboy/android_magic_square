@@ -17,23 +17,26 @@ public class MagicSquare {
 
     public MagicSquare(int size, Point startPosition) {
         mSize = size;
+
         mStartPosition = startPosition;
+        mStartPosition.x  = getValueInBound(startPosition.x);
+        mStartPosition.y  = getValueInBound(startPosition.y);
+
         final int itemCount = size*size;
         mValues = new int[itemCount];
         for (int i = 0; i < itemCount; i++) {
             mValues[i] = EMPTY;
         }
-        mCurrentValue = 0;
+        mCurrentValue = 1;
     }
 
     public int[] build() {
         mCurrentPosition = mStartPosition;
         addValue(mCurrentPosition, mCurrentValue);
 
-        while (mCurrentValue <= mSize*mSize) {
+        while (mCurrentValue < mSize*mSize) {
             mCurrentPosition = getNextPosition();
-            addValue(mCurrentPosition, mCurrentValue);
-            mCurrentValue++;
+            addValue(mCurrentPosition, ++mCurrentValue);
         }
         return mValues;
     }
@@ -48,11 +51,11 @@ public class MagicSquare {
     }
 
     private Point getNextPosition() {
-        int newX = (mCurrentPosition.x + 1) % mSize - 1;
-        int newY = (mCurrentPosition.y + 1) % mSize - 1;
+        int newX = getValueInBound(mCurrentPosition.x + 1);
+        int newY = getValueInBound(mCurrentPosition.y + 1);
 
         while (mValues[getId(newX, newY, mSize)] != EMPTY) {
-            newY = (mCurrentPosition.y + 2) % mSize - 1;
+            newY = getValueInBound(mCurrentPosition.y + 2);
         }
         mCurrentPosition.x = newX;
         mCurrentPosition.y = newY;
@@ -64,5 +67,12 @@ public class MagicSquare {
         return mSize;
     }
 
+    private int getValueInBound(int value) {
+        if (value >= 0 && value < mSize) {
+            return value;
+        }
+
+        return (value + 1) % mSize - 1;
+    }
 
 }

@@ -15,12 +15,14 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 
     private SeekBar mSeekBar;
     private GridView mGridView;
+    private TextView mTvSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mTvSize = (TextView) findViewById(R.id.tvSize);
         mSeekBar = (SeekBar) findViewById(R.id.seekBar);
         mSeekBar.setOnSeekBarChangeListener(this);
 
@@ -44,6 +46,7 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
             return;
         }
 
+        mTvSize.setText(String.valueOf(size));
         mGridView.removeAllViewsInLayout();
         drawMagicSquare(size);
     }
@@ -65,7 +68,7 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
         TextView textView = null;
         for (int value : values) {
             textView = new TextView(getApplicationContext());
-            textView.setText(value);
+            textView.setText(String.valueOf(value));
             mGridView.addView(textView);
         }
     }

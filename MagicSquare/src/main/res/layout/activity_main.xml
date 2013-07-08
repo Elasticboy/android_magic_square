@@ -14,14 +14,26 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:numColumns="3"
-            android:layout_height="wrap_content"/>
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
 
-
+    <LinearLayout android:layout_height="wrap_content"
+                  android:layout_width="match_parent"
+                  android:orientation="horizontal">
     <SeekBar
             android:id="@+id/seekBar"
             android:max="7"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom" />
+
+    <TextView android:id="@+id/tvSize"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="3" />
+
+    </LinearLayout>
 
 </LinearLayout>
