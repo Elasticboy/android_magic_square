@@ -15,6 +15,7 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 
     private SeekBar mSeekBar;
     private GridView mGridView;
+	private GridViewAdapter mGridViewAdapter;
     private TextView mTvSize;
 
     @Override
@@ -27,6 +28,7 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
         mSeekBar.setOnSeekBarChangeListener(this);
 
         mGridView = (GridView) findViewById(R.id.gridView);
+		mGridView.setAdapter(mGridViewAdapter);
         mGridView.setCacheColorHint(R.color.grid_color);
         mGridView.setBackgroundColor(getResources().getColor(R.color.grid_color));
     }
@@ -76,4 +78,42 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
     private int getSquareSize() {
         return mSeekBar.getProgress() + 3;
     }
+	
+	public class GridViewAdapter extends BaseAdapter {
+
+		private Context mContext;
+
+		public GridViewAdapter(Context c, int itemCount) {
+			mContext = c;
+		}
+
+		public int getCount() {
+			return items.size();
+		}
+
+		public Object getItem(int position) {
+			return items.get(position);
+		}
+
+		public long getItemId(int position) {
+			return position;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {         
+			View v;         
+
+			if(convertView == null) {
+				LayoutInflater li = getLayoutInflater();
+				v = li.inflate(R.layout.grid_item, null);
+			} else {             
+				v = convertView;         
+			}
+
+			TextView tv = (TextView)v.findViewById(R.id.grid_item_text);
+			tv.setText(items.get(position));         
+
+			return v;     
+		} 
+
+	}
 }
