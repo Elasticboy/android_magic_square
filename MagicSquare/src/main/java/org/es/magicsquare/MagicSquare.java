@@ -7,12 +7,12 @@ import android.graphics.Point;
  */
 public class MagicSquare {
 
-    private static final int EMPTY = -1;
+    private static final String EMPTY = "";
 
     private int mSize;
     private Point mStartPosition;
     private Point mCurrentPosition;
-    private int[] mValues;
+    private String[] mValues;
     private int mCurrentValue;
 
     public MagicSquare(int size, Point startPosition) {
@@ -23,14 +23,14 @@ public class MagicSquare {
         mStartPosition.y  = getValueInBound(startPosition.y);
 
         final int itemCount = size*size;
-        mValues = new int[itemCount];
+        mValues = new String[itemCount];
         for (int i = 0; i < itemCount; i++) {
             mValues[i] = EMPTY;
         }
         mCurrentValue = 1;
     }
 
-    public int[] build() {
+    public String[] build() {
         mCurrentPosition = mStartPosition;
         addValue(mCurrentPosition, mCurrentValue);
 
@@ -43,7 +43,7 @@ public class MagicSquare {
 
     private void addValue(Point position, int value) {
         final int id = getId(position.x, position.y, mSize);
-        mValues[id] = value;
+        mValues[id] = String.valueOf(value);
     }
 
     private static int getId(int x, int y, int size) {
@@ -55,6 +55,7 @@ public class MagicSquare {
         int newY = getValueInBound(mCurrentPosition.y + 1);
 
         while (mValues[getId(newX, newY, mSize)] != EMPTY) {
+            newX = getValueInBound(mCurrentPosition.x );
             newY = getValueInBound(mCurrentPosition.y + 2);
         }
         mCurrentPosition.x = newX;
