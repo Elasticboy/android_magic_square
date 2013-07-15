@@ -22,4 +22,5 @@ local.properties
 # Android Studio project files
 *.iml
 .idea
-build
+build/
+out/
