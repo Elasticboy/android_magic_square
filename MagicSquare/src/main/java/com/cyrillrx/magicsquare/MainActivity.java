@@ -1,9 +1,8 @@
-package org.es.magicsquare;
+package com.cyrillrx.magicsquare;
 
+import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.SeekBar;
@@ -14,6 +13,7 @@ import java.util.Random;
 
 public class MainActivity extends Activity implements OnSeekBarChangeListener {
 
+    private static final int MIN_SQUARE_SIZE = 3;
     private SeekBar mSeekBar;
     private GridView mGridView;
     private TextView mTvSize;
@@ -28,15 +28,8 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
         mSeekBar.setOnSeekBarChangeListener(this);
 
         mGridView = (GridView) findViewById(R.id.gridView);
-        mGridView.setCacheColorHint(R.color.grid_color);
+        mGridView.setCacheColorHint(getResources().getColor(R.color.grid_color));
         mGridView.setBackgroundColor(getResources().getColor(R.color.grid_color));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
@@ -60,21 +53,21 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 
     private void drawMagicSquare(int size) {
 
-        Random rand = new Random();
-        Point startPosition = new Point(rand.nextInt(size), rand.nextInt(size));
-        MagicSquare magicSquare = new MagicSquare(size, startPosition);
+        final Random rand = new Random();
+        final Point startPosition = new Point(rand.nextInt(size), rand.nextInt(size));
+        final MagicSquare magicSquare = new MagicSquare(size, startPosition);
 
-        String[] values = magicSquare.build();
+        final String[] values = magicSquare.build();
 
         mGridView.setNumColumns(size);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_list_item_1,
+                R.layout.item_grid,
                 values);
         mGridView.setAdapter(adapter);
     }
 
     private int getSquareSize() {
-        return mSeekBar.getProgress() + 3;
+        return mSeekBar.getProgress() + MIN_SQUARE_SIZE;
     }
 }

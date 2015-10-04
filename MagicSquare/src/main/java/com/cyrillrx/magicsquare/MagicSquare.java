@@ -1,9 +1,10 @@
-package org.es.magicsquare;
+package com.cyrillrx.magicsquare;
 
 import android.graphics.Point;
 
 /**
- * Created by Cyril on 06/07/13.
+ * @author Cyril Leroux
+ *         Created on 06/07/13.
  */
 public class MagicSquare {
 
@@ -11,7 +12,7 @@ public class MagicSquare {
 
     private int mSize;
     private Point mStartPosition;
-    private Point mCurrentPosition;
+    private Point mCurrentPos;
     private String[] mValues;
     private int mCurrentValue;
 
@@ -19,10 +20,10 @@ public class MagicSquare {
         mSize = size;
 
         mStartPosition = startPosition;
-        mStartPosition.x  = getValueInBound(startPosition.x);
-        mStartPosition.y  = getValueInBound(startPosition.y);
+        mStartPosition.x = getValueInBound(startPosition.x);
+        mStartPosition.y = getValueInBound(startPosition.y);
 
-        final int itemCount = size*size;
+        final int itemCount = size * size;
         mValues = new String[itemCount];
         for (int i = 0; i < itemCount; i++) {
             mValues[i] = EMPTY;
@@ -31,12 +32,12 @@ public class MagicSquare {
     }
 
     public String[] build() {
-        mCurrentPosition = mStartPosition;
-        addValue(mCurrentPosition, mCurrentValue);
+        mCurrentPos = mStartPosition;
+        addValue(mCurrentPos, mCurrentValue);
 
-        while (mCurrentValue < mSize*mSize) {
-            mCurrentPosition = getNextPosition();
-            addValue(mCurrentPosition, ++mCurrentValue);
+        while (mCurrentValue < mSize * mSize) {
+            mCurrentPos = getNextPosition();
+            addValue(mCurrentPos, ++mCurrentValue);
         }
         return mValues;
     }
@@ -51,22 +52,20 @@ public class MagicSquare {
     }
 
     private Point getNextPosition() {
-        int newX = getValueInBound(mCurrentPosition.x + 1);
-        int newY = getValueInBound(mCurrentPosition.y + 1);
+        int newX = getValueInBound(mCurrentPos.x + 1);
+        int newY = getValueInBound(mCurrentPos.y + 1);
 
-        while (mValues[getId(newX, newY, mSize)] != EMPTY) {
-            newX = getValueInBound(mCurrentPosition.x );
-            newY = getValueInBound(mCurrentPosition.y + 2);
+        while (!EMPTY.equals(mValues[getId(newX, newY, mSize)])) {
+            newX = getValueInBound(mCurrentPos.x);
+            newY = getValueInBound(mCurrentPos.y + 2);
         }
-        mCurrentPosition.x = newX;
-        mCurrentPosition.y = newY;
+        mCurrentPos.x = newX;
+        mCurrentPos.y = newY;
 
-        return mCurrentPosition;
+        return mCurrentPos;
     }
 
-    public int getSize() {
-        return mSize;
-    }
+    public int getSize() { return mSize; }
 
     private int getValueInBound(int value) {
         if (value >= 0 && value < mSize) {
