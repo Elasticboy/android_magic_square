@@ -56,11 +56,13 @@
 
         <TextView
             android:id="@+id/tvSize"
-            android:textColor="@color/text"
-            android:layout_width="15dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="3" />
+            android:gravity="center"
+            android:paddingLeft="@dimen/spacing_common"
+            android:text="3"
+            android:textColor="@color/text" />
 
     </LinearLayout>
 

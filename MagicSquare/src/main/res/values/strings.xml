@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Magic square!</string>
-    <string name="title">Awesome magic square</string>
+    <string name="app_name">Magic square</string>
+    <string name="title">Awesome magic square !</string>
     <string name="subtitle">Use the seekbar to change the size of the square</string>
 
 </resources>
