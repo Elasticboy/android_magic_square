@@ -14,22 +14,23 @@ import java.util.Random;
 public class MainActivity extends Activity implements OnSeekBarChangeListener {
 
     private static final int MIN_SQUARE_SIZE = 3;
-    private SeekBar mSeekBar;
-    private GridView mGridView;
-    private TextView mTvSize;
+
+    private SeekBar seekBar;
+    private GridView gridView;
+    private TextView tvSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTvSize = (TextView) findViewById(R.id.tvSize);
-        mSeekBar = (SeekBar) findViewById(R.id.seekBar);
-        mSeekBar.setOnSeekBarChangeListener(this);
+        tvSize = (TextView) findViewById(R.id.tvSize);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(this);
 
-        mGridView = (GridView) findViewById(R.id.gridView);
-        mGridView.setCacheColorHint(getResources().getColor(R.color.grid_color));
-        mGridView.setBackgroundColor(getResources().getColor(R.color.grid_color));
+        gridView = (GridView) findViewById(R.id.gridView);
+        gridView.setCacheColorHint(getResources().getColor(R.color.grid_color));
+        gridView.setBackgroundColor(getResources().getColor(R.color.grid_color));
     }
 
     @Override
@@ -40,8 +41,8 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
             return;
         }
 
-        mTvSize.setText(String.valueOf(size));
-        mGridView.removeAllViewsInLayout();
+        tvSize.setText(String.valueOf(size));
+        gridView.removeAllViewsInLayout();
         drawMagicSquare(size);
     }
 
@@ -59,15 +60,13 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener {
 
         final String[] values = magicSquare.build();
 
-        mGridView.setNumColumns(size);
+        gridView.setNumColumns(size);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 R.layout.item_grid,
                 values);
-        mGridView.setAdapter(adapter);
+        gridView.setAdapter(adapter);
     }
 
-    private int getSquareSize() {
-        return mSeekBar.getProgress() + MIN_SQUARE_SIZE;
-    }
+    private int getSquareSize() { return seekBar.getProgress() + MIN_SQUARE_SIZE; }
 }
